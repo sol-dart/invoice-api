@@ -15,6 +15,12 @@ app.get('/', (req: Request, res: Response) => {
     })
 })
 
+app.get('/test', (req: Request, res: Response) => {
+    res.send({
+        body: 'hello there!'
+    })
+})
+
 app.post('/addInvoice', async (req: Request, res: Response) => {
     let body = req.body
     await Invoice.sync()
