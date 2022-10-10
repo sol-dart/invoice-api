@@ -19,7 +19,7 @@ app.get('/', (req: Request, res: Response) => {
 
 app.get('/test', (req: Request, res: Response) => {
     res.send({
-        body: 'hello there!'
+        body: 'hello bud!'
     })
 })
 
