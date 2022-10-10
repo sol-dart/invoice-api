@@ -1,6 +1,7 @@
 import express, { Express, Request, Response } from 'express'
 import dotenv from 'dotenv'
 import { sequelizeConnection, Invoice } from './config'
+const { Op } = require("sequelize")
 const bodyParser = require('body-parser')
 const cors = require('cors')
 dotenv.config()
@@ -13,13 +14,7 @@ app.use(cors())
 
 app.get('/', (req: Request, res: Response) => {
     res.send({
-        body: 'This is a test'
-    })
-})
-
-app.get('/test', (req: Request, res: Response) => {
-    res.send({
-        body: 'hello bud!'
+        body: 'Welcome to the Dart database API'
     })
 })
 
@@ -42,9 +37,18 @@ app.post('/addInvoice', async (req: Request, res: Response) => {
 })
 
 app.get('/fetchInvoice', async (req: Request, res: Response) => {
-    sequelizeConnection()
+    
+    const result = await Invoice.findAll({
+        where: {
+            [Op.or]: [
+                { payer: req.body.pubkey },
+                { recipient: req.body.pubkey }
+            ]
+        }
+    })
+
     res.send({
-        message: "Fetching invoice from the database"
+        invoices: result
     })
 })
 
