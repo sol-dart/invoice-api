@@ -2,12 +2,14 @@ import express, { Express, Request, Response } from 'express'
 import dotenv from 'dotenv'
 import { sequelizeConnection, Invoice } from './config'
 const bodyParser = require('body-parser')
+const cors = require('cors')
 dotenv.config()
 
 const app: Express = express()
 const port = process.env.PORT
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
+app.use(cors())
 
 app.get('/', (req: Request, res: Response) => {
     res.send({
